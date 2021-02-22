@@ -22,7 +22,7 @@ const post = (connection, req, res, payload) => {
   );
 };
 
-const update = (connection, req, res) => {
+const put = (connection, req, res) => {
   connection.query(`alter table ${table}`, (erreur, data) => {
     if (erreur) throw erreur;
     return res.json({ apprenants: data });
@@ -51,6 +51,6 @@ const drop = (connection, req, res, payload) => {
 
 exports.get = get;
 exports.post = post;
-exports.update = update;
+exports.put = put;
 exports.find = find;
 exports.drop = drop;
