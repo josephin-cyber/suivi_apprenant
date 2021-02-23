@@ -1,7 +1,6 @@
 const db=require("./config/db");
 const express=require("express");
 const mysql=require("mysql");
-//var bodyParser = require('body-parser');
 const apprenant=require("./controlers/apprenant_controler")
 const user=require("./controlers/user_controler")
 const formidable = require('express-formidable');
@@ -12,23 +11,15 @@ const connection = mysql.createConnection(db.db);
 
 server.use(formidable());
 
-
-// server.use(bodyParser.json()); 
-// server.use(bodyParser.urlencoded());
-// server.use(bodyParser.urlencoded({ extended: true })); 
-
-
-
-// for parsing multipart/form-data
-// server.use(upload.array()); 
-// server.use(express.static('public'));
-
-//Connexion à la base de données
 connection.connect((erreur) => {
   if (erreur) {
     throw erreur;
   }
   console.log('La connexion à la base de données est établie');
+});
+
+server.get('/', (req, res)=>{
+  res.send("Le serveur écoute sur http://127.0.0.1:8000");
 });
 
 
