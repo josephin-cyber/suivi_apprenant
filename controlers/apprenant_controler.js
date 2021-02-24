@@ -1,12 +1,13 @@
 let table = "apprenant";
-let foreign = "apprenant_competence";
-let foreign_ = "promotion_cohorte";
+
 
 const get = (connection, req, res) => {
   connection.query(
-    `SELECT * FROM ${table} 
-    INNER JOIN ${foreign} ON ${foreign}.id_${table}=${table}.id_apprenant 
-    INNER JOIN ${foreign_} ON ${foreign_}.id_${foreign_}=${table}.id_${foreign_}`,
+    `SELECT * FROM apprenant 
+    INNER JOIN apprenant_competence ON apprenant_competence.id_apprenant=apprenant.id_apprenant 
+    INNER JOIN promotion_cohorte ON promotion_cohorte.id_promotion_cohorte=apprenant.id_promotion_cohorte
+    INNER JOIN competence ON apprenant_competence.id_competence=competence.id_competence
+    INNER JOIN promotion ON promotion.id_promotion=promotion_cohorte.id_promotion`,
     (error, data) => {
       if (error) return res.json({ error });
       return res.json({ data });
