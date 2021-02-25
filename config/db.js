@@ -1,8 +1,8 @@
 const params={
     host: 'localhost',
     user: 'admin07',
-    database: 'suivi_apprenant',
     password: 'admin',
-  }
+    database: 'suivi_apprenant',
+}
 
 exports.params=params;

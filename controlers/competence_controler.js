@@ -1,5 +1,5 @@
 const get = (connection, req, res) => {
-  connection.query(`SELECT * FROM competence INNER JOIN `, (error, data) => {
+  connection.query(`SELECT * FROM competence`, (error, data) => {
     if (error) return res.json({ error });
     return res.json({ data });
   });
