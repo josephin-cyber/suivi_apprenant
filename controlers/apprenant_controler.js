@@ -1,6 +1,5 @@
 let table = "apprenant";
 
-
 const get = (connection, req, res) => {
   connection.query(
     `SELECT * FROM apprenant 
@@ -35,15 +34,15 @@ const put = (connection, req, res) => {
   );
 };
 
-const find = (connection, req, res) => {
-  connection.query(
-    `SELECT * FROM ${table} WHERE id_apprenant=${req.params.payload} OR nom_apprenant LIKE %'${req.params.payload}'%`,
-    (error, data) => {
-      if (error) return res.json({ error });
-      return res.json({ apprenants: data });
-    }
-  );
-};
+// const find = (connection, req, res) => {
+//   connection.query(
+//     `SELECT * FROM ${table} WHERE id_apprenant=${req.params.payload} OR nom_apprenant LIKE %'${req.params.payload}'%`,
+//     (error, data) => {
+//       if (error) return res.json({ error });
+//       return res.json({ apprenants: data });
+//     }
+//   );
+// };
 
 const drop = (connection, req, res) => {
   connection.query(
@@ -58,5 +57,5 @@ const drop = (connection, req, res) => {
 exports.get = get;
 exports.post = post;
 exports.put = put;
-exports.find = find;
 exports.drop = drop;
+//exports.find = find;
