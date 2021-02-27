@@ -8,6 +8,9 @@ const cors = require("cors");
 const server = express();
 const PORT = 8000;
 
+// Accès aux images
+server.use(express.static('storage'));
+
 // connection to database
 const connect_to_db = (connection) => {
   connection.connect((error) => {
