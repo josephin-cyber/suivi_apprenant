@@ -33,5 +33,4 @@ const drop = (connection, req, res) => {
 };
 
 exports.post = post;
-exports.put = put;
 exports.drop = drop;

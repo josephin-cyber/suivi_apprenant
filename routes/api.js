@@ -8,8 +8,8 @@ const authenticateJWT = require("../config/jwt");
 
 const api = (server, db) => {
   //login
-  server.route("/api/login").get((req, res) => {
-    loginController.get(db, req, res);
+  server.route("/api/login").post((req, res) => {
+    loginController.post(db, req, res);
   });
 
   // apprenants
@@ -33,9 +33,6 @@ const api = (server, db) => {
     .route("/api/apprenant/competence")
     .post(authenticateJWT.authenticateJWT, (req, res) => {
       apprenantCompetenceController.post(db, req, res);
-    })
-    .put(authenticateJWT.authenticateJWT, (req, res) => {
-      apprenantCompetenceController.put(db, req, res);
     })
     .delete(authenticateJWT.authenticateJWT, (req, res) => {
       apprenantCompetenceController.drop(db, req, res);
@@ -73,7 +70,7 @@ const api = (server, db) => {
       promotionController.get(db, req, res);
     });
 
-  //comptence
+  //competence
   server
     .route("/api/competence")
     .get(authenticateJWT.authenticateJWT, (req, res) => {
@@ -88,6 +85,15 @@ const api = (server, db) => {
     .delete(authenticateJWT.authenticateJWT, (req, res) => {
       competenceController.drop(db, req, res);
     });
+
+  //competence apprenant
+  server.get(
+    "/api/competence/apprenant",
+    authenticateJWT.authenticateJWT,
+    (req, res) => {
+      competenceController.get_select(db, req, res);
+    }
+  );
 };
 
 exports.api = api;

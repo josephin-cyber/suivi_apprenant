@@ -1,4 +1,5 @@
 const fs = require("fs");
+const apprenantCompetenceController = require("../controlers/apprenant_competence_controller");
 
 const get = (connection, req, res) => {
   connection.query(
@@ -35,9 +36,13 @@ const post = (connection, req, res) => {
   else photo = req.fields.image_name;
 
   connection.query(
-    `INSERT INTO apprenant (photo_apprenant, nom_apprenant, postnom_apprenant,prenom_apprenant, sex_apprenant, adresse_apprenant, email_apprenant,tel_apprenant, date_naissance, id_promotion, 	niveau_id) VALUES ('${photo}','${req.fields.nom}', '${req.fields.post_nom}', '${req.fields.prenom}', '${req.fields.sex}', '${req.fields.adress}', '${req.fields.email}', '${req.fields.tel}', '${req.fields.date}', '${req.fields.niveau}', ${req.fields.id_promotion}, ${req.fileds.niveau_id})`,
+    `INSERT INTO apprenant (photo_apprenant, nom_apprenant, postnom_apprenant,prenom_apprenant, sex_apprenant, adresse_apprenant, email_apprenant,tel_apprenant, date_naissance, id_promotion) VALUES ('${photo}','${req.fields.nom}', '${req.fields.post_nom}', '${req.fields.prenom}', '${req.fields.sex}', '${req.fields.adress}', '${req.fields.email}', '${req.fields.tel}', '${req.fields.date}', ${req.fields.id_promotion})`,
     (error, data) => {
       if (error) return res.status(500).json({ error });
+      if(req.fields.competences.length > 0){
+        req.fields.id_apprenant=data.insertId;
+        return apprenantCompetenceController.post(connection, req, res);
+      } 
       return res.status(200).json({ data });
     }
   );
