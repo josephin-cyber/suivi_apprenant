@@ -29,16 +29,6 @@ const put = (connection, req, res) => {
   });
 };
 
-const login = (connection, req, res) => {
-  connection.query(
-    `select * from ${table} WHERE email_utiisateur='${req.fields.email}' AND pwd_utilisateur=SHA1('${req.fields.pwd}') where id=${req.fields.id_utilisateur}`,
-    (erreur, data) => {
-      if (erreur) throw erreur;
-      return res.json({ apprenants: data });
-    }
-  );
-};
-
 const drop = (connection, req, res, payload) => {
   connection.query(
     `delete from ${table} where id=${payload.id}`,
@@ -52,5 +42,4 @@ const drop = (connection, req, res, payload) => {
 exports.get = get;
 exports.post = post;
 exports.put = put;
-exports.login = login;
 exports.drop = drop;

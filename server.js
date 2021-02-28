@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+const jwt = require('jsonwebtoken');
 const express = require("express");
 const formidable = require("express-formidable");
 const web = require("./routes/web");

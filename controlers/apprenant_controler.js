@@ -1,7 +1,4 @@
-// const multer = require("multer");
-// const path = require("path");
 const fs = require("fs");
-//const decodeBase64Image=require("decodeBase64Image");
 
 const get = (connection, req, res) => {
   connection.query(
@@ -45,17 +42,18 @@ const post = (connection, req, res) => {
       if (error) {
         return res.status(500).json({ error });
       } else {
-        if (req.fields.competences.length > 0) {
-          req.fields.competences.map((item) => {
-            connection.query(
-              `INSERT INTO apprenant_competence (id_apprenant, id_competence) VALUES ('${data.insertId}', '${item.value}')`,
-              (err, result) => {
-                if (err) return console.log(err);
-              }
-            );
-          });
-        }
         return res.status(200).json({ data });
+        // if (req.fields.competences.length > 0) {
+        //   req.fields.competences.map((item) => {
+        //     connection.query(
+        //       `INSERT INTO apprenant_competence (id_apprenant, id_competence) VALUES ('${data.insertId}', '${item.value}')`,
+        //       (err, result) => {
+        //         if (err) return console.log(err);
+        //       }
+        //     );
+        //   });
+        // }
+        // return res.status(200).json({ data });
       }
     }
   );

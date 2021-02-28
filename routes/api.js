@@ -1,49 +1,76 @@
 const apprenantController = require("../controlers/apprenant_controler");
-const promotionController = require("../controlers/promotion_cohorte_controler");
+const apprenantCompetenceController = require("../controlers/apprenant_competence_controller");
+const promotionController = require("../controlers/promotion_controler");
 const competenceController = require("../controlers/competence_controler");
 const userController = require("../controlers/user_controler");
+const loginController = require("../controlers/login_controller");
+const authenticateJWT = require("../config/jwt");
 
 const api = (server, db) => {
-  
+  //login
+  server.route("/api/login").get((req, res) => {
+    loginController.get(db, req, res);
+  });
+
   // apprenants
-  server.route("/api/apprenant")
-    .get((req, res) => {
+  server
+    .route("/api/apprenant")
+    .get(authenticateJWT.authenticateJWT, (req, res) => {
       apprenantController.get(db, req, res);
     })
-    .post((req, res) => {
+    .post(authenticateJWT.authenticateJWT, (req, res) => {
       apprenantController.post(db, req, res);
     })
-    .put((req, res) => {
+    .put(authenticateJWT.authenticateJWT, (req, res) => {
       apprenantController.put(db, req, res);
     })
-    .delete((req, res) => {
-      apprenantController.delete(db, req, res);
+    .delete(authenticateJWT.authenticateJWT, (req, res) => {
+      apprenantController.drop(db, req, res);
     });
 
- //users
- server.route("/api/user")
- .get((req, res) => {
+  // apprenant/competence
+  server
+    .route("/api/apprenant/competence")
+    .post(authenticateJWT.authenticateJWT, (req, res) => {
+      apprenantCompetenceController.post(db, req, res);
+    })
+    .put(authenticateJWT.authenticateJWT, (req, res) => {
+      apprenantCompetenceController.put(db, req, res);
+    })
+    .delete(authenticateJWT.authenticateJWT, (req, res) => {
+      apprenantCompetenceController.drop(db, req, res);
+    });
+
+  //users
+  server.route("/api/user").get(authenticateJWT.authenticateJWT, (req, res) => {
     userController.get(db, req, res);
   });
- 
-//promotion
- server.route("/api/promotion")
- .get((req, res) => {
-    promotionController.get(db, req, res);
-  });
 
-//comptence
- server.route("/api/competence")
- .get((req, res) => {
-    competenceController.get(db, req, res);
-  });
+  //promotion
+  server
+    .route("/api/promotion")
+    .get(authenticateJWT.authenticateJWT, (req, res) => {
+      promotionController.get(db, req, res);
+    })
+    .post(authenticateJWT.authenticateJWT, (req, res) => {
+      promotionController.get(db, req, res);
+    })
+    .put(authenticateJWT.authenticateJWT, (req, res) => {
+      promotionController.get(db, req, res);
+    });
 
-server.route("/api/competence/apprenant")
-.get((req, res) => {
-    competenceController.get_apprenant(db, req, res);
-  });
+  //comptence
+  server
+    .route("/api/competence")
+    .get(authenticateJWT.authenticateJWT, (req, res) => {
+      competenceController.get(db, req, res);
+    });
 
-    
+  server
+    .route("/api/competence/apprenant")
+    .get(authenticateJWT.authenticateJWT, (req, res) => {
+      competenceController.get_apprenant(db, req, res);
+    });
 };
 
-exports.api=api;
+exports.api = api;
