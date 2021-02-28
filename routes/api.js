@@ -42,9 +42,20 @@ const api = (server, db) => {
     });
 
   //users
-  server.route("/api/user").get(authenticateJWT.authenticateJWT, (req, res) => {
-    userController.get(db, req, res);
-  });
+  server
+    .route("/api/user")
+    .get(authenticateJWT.authenticateJWT, (req, res) => {
+      userController.get(db, req, res);
+    })
+    .post(authenticateJWT.authenticateJWT, (req, res) => {
+      userController.post(db, req, res);
+    })
+    .put(authenticateJWT.authenticateJWT, (req, res) => {
+      userController.put(db, req, res);
+    })
+    .delete(authenticateJWT.authenticateJWT, (req, res) => {
+      userController.drop(db, req, res);
+    });
 
   //promotion
   server
@@ -57,6 +68,9 @@ const api = (server, db) => {
     })
     .put(authenticateJWT.authenticateJWT, (req, res) => {
       promotionController.get(db, req, res);
+    })
+    .delete(authenticateJWT.authenticateJWT, (req, res) => {
+      promotionController.get(db, req, res);
     });
 
   //comptence
@@ -64,12 +78,15 @@ const api = (server, db) => {
     .route("/api/competence")
     .get(authenticateJWT.authenticateJWT, (req, res) => {
       competenceController.get(db, req, res);
-    });
-
-  server
-    .route("/api/competence/apprenant")
-    .get(authenticateJWT.authenticateJWT, (req, res) => {
-      competenceController.get_apprenant(db, req, res);
+    })
+    .post(authenticateJWT.authenticateJWT, (req, res) => {
+      competenceController.post(db, req, res);
+    })
+    .put(authenticateJWT.authenticateJWT, (req, res) => {
+      competenceController.put(db, req, res);
+    })
+    .delete(authenticateJWT.authenticateJWT, (req, res) => {
+      competenceController.drop(db, req, res);
     });
 };
 

@@ -1,18 +1,8 @@
 const get = (connection, req, res) => {
-  connection.query(`SELECT * FROM competence`, (error, data) => {
+  connection.query(`SELECT * FROM competence INNER JOIN apprenant_competence ON competence.id_competence=apprenant_competence.id_competence`, (error, data) => {
     if (error) return res.json({ error });
     return res.json({ data });
   });
-};
-
-const get_apprenant = (connection, req, res) => {
-  connection.query(
-    `SELECT * FROM competence INNER JOIN apprenant_competence ON competence.id_competence=apprenant_competence.id_competence`,
-    (error, data) => {
-      if (error) return res.json({ error });
-      return res.json({ data });
-    }
-  );
 };
 
 const post = (connection, req, res) => {
@@ -46,7 +36,6 @@ const drop = (connection, req, res) => {
 };
 
 exports.get = get;
-exports.get_apprenant = get_apprenant;
 exports.post = post;
 exports.put = put;
 exports.drop = drop;
