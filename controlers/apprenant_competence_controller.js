@@ -15,27 +15,12 @@ const post = (connection, req, res) => {
   }
 };
 
-const put = (connection, req, res) => {
-  if (req.fields.competences.length > 0) {
-    req.fields.competences.map((item) => {
-      connection.query(
-        `UPDATE apprenant_competence SET id_competence='${item.value}' WHERE id_apprenant='${req.fields.id_apprenant}'`,
-        (err, result) => {
-          if (err) return console.log(err);
-        }
-      );
-    });
-    return res.status(200).json({ data: "success" });
-  } else {
-    return res.status(403).json({ data: "error" });
-  }
-};
-
+// to refractor 
 const drop = (connection, req, res) => {
   if (req.fields.competences.length > 0) {
     req.fields.competences.map((item) => {
       connection.query(
-        `DELETE FROM apprenant_competence WHERE id_competence='${item.value}'`,
+        `DELETE FROM apprenant_competence WHERE id_competence='${item.value}' AND id_apprenant='${req.fields.id_apprenant}'`,
         (err, result) => {
           if (err) return console.log(err);
         }

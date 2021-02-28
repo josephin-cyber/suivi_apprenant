@@ -27,7 +27,7 @@ const post = (connection, req, res) => {
 
 const put = (connection, req, res) => {
   connection.query(
-    `UPDATE competence SET nom_comptence='${req.fields.nom}' WHERE id_competence ='${req.fields.id}'`,
+    `UPDATE competence SET nom_comptence='${req.fields.nom}' WHERE id_competence ='${req.fields.id_competence}'`,
     (error, data) => {
       if (error) return res.json({ error });
       return res.json({ data });

@@ -1,40 +1,39 @@
-let table = "utilisateur";
-let foreign = "role";
-
 const get = (connection, req, res) => {
   connection.query(
-    `SELECT * FROM ${table} 
-    INNER JOIN ${foreign} ON ${foreign}.id_${table}=${table}.id_utilisateur`,
-    (erreur, data) => {
-      if (erreur) throw erreur;
-      return res.json({ data: data });
+    `SELECT * FROM utilisateur INNER JOIN utilisateur_permission ON utilisateur_permission.id_utilisateur=utilisateur.id_utilisateur`,
+    (error, data) => {
+      if (error) return res.json({ error}).status(500);
+      return res.json({ data }).status(200);
     }
   );
 };
 
-const post = (connection, req, res, payload) => {
+const post = (connection, req, res) => {
   connection.query(
-    `insert into ${table} ('name') values (${payload.name})  `,
-    (erreur, data) => {
-      if (erreur) throw erreur;
-      return res.json({ apprenants: data });
+    `insert into utilisateur ('nom_utilisateur', 'pwd_utilisateur', 'email_utilisateur') values ('${req.fields.nom}', SHA1('${req.fields.pwd}'), '${req.fields.email}')`,
+    (error, data) => {
+      if (error) return res.json({error}).status(500);
+      return res.json({ data }).status(200);
     }
   );
 };
 
 const put = (connection, req, res) => {
-  connection.query(`alter table ${table}`, (erreur, data) => {
-    if (erreur) throw erreur;
-    return res.json({ apprenants: data });
-  });
+  connection.query(
+    `ALTER TABLE utilisateur SET nom_utilisateur='${req.fields.nom}', pwd_utilisateur=SHA1('${req.fields.pwd}'), email_utilisateur='${req.fields.email}' WHERE id_utilisateur=${req.fields.id_utilisateur}`,
+    (error, data) => {
+      if (error) return res.json({ error }).status(500);
+      return res.json({ data });
+    }
+  );
 };
 
-const drop = (connection, req, res, payload) => {
+const drop = (connection, req, res) => {
   connection.query(
-    `delete from ${table} where id=${payload.id}`,
-    (erreur, data) => {
-      if (erreur) throw erreur;
-      return res.json({ apprenants: data });
+    `delete from utilisateur where id=${req.fields.id_utilisateur}`,
+    (error, data) => {
+      if (error) return res.json({ error }).status(500);
+      return res.json({ data });
     }
   );
 };

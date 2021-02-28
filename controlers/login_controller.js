@@ -10,5 +10,5 @@ const get = (connection, req, res) => {
       }
     );
   };
-
+  
   exports.get = get;
